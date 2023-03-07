@@ -5,8 +5,10 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Container } from '@mui/system';
 import { Card } from '@mui/material';
-import CardDetail from './CardDetail';
+import CardDetail from '../components/CardDetail';
 import {loadCards} from '../services/CardService'
+import { Link } from 'react-router-dom';
+import constant from '../utils/constant';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,13 +23,14 @@ export default function ArticleList() {
     useEffect(() => {
         loadCards()
             .then((res) => {
-                console.log("Response is ", res.data);
                 setData(res.data)
             })
+        
     }, [])
     return (
         <div>
-            List of Articles in cards DataGrid
+            List of Articles in cards DataGrid  
+            <Link to={constant.APP_ROUTES.GET_VISITOR}>Visitor List</Link>
             <Container>
 
                 <Grid container >

@@ -13,7 +13,6 @@ import {Card as GridCard} from '@opensource/bit-scope.card'
 export default function CardDetail(props) {
   const {date,link,title,excerpt,image,creator} = props;
   var strippedHtml = excerpt.replace(/<[^>]+>/g, '');
-  console.log('-----------Excert -------------------',strippedHtml)
   return (
     // Created separte component for displaying one card
     // <Card sx={{ maxWidth: 345 }}>
