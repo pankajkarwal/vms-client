@@ -14,7 +14,6 @@ function Toast(message, type) {
         toast.warning(message)
         break
       case toast.TYPE.ERROR:
-        console.log("Error")
         toast.error(message)
         break
       case toast.TYPE.DEFAULT:

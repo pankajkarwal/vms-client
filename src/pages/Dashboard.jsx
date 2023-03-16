@@ -1,5 +1,5 @@
 import React from 'react'
-import dashboardImage from '../assets/Dashboard.png'
+import dashboardImage from '../assets/images/Dashboard.png'
 
 export default function Dashboard() {
     const imagStyle = {

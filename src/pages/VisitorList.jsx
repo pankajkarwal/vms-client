@@ -15,13 +15,13 @@ export default function VisitorList() {
   const [rows, setRows] = useState([])
   let dialogOpen = false;
   const [id, setId] = useState(0);
-  const [openBox,setOpenBox] = useState(false);
+  const [openBox, setOpenBox] = useState(false);
   const [openPopup, setOpenPopup] = useState(false)
   const [clickedRow, setClickedRow] = React.useState();
   const onDelete = (visitorId) => {
-    
-   // Call the api for deleting the visitor record from the database
-    console.log("VIsitor Id",visitorId)
+
+    // Call the api for deleting the visitor record from the database
+    console.log("VIsitor Id", visitorId)
   };
   const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ export default function VisitorList() {
                 title={constant.MODELS.VISITOR.DELETE_HEADER}
                 open={openBox}
                 setOpen={setOpenBox}
-                onConfirm={(e) => onDelete(e,params.row._id)}
+                onConfirm={(e) => onDelete(e, params.row._id)}
               >
                 {constant.MODELS.VISITOR.DELETE_TEXT}
               </ConfirmDialog>
@@ -91,11 +91,14 @@ export default function VisitorList() {
   return (
     <>
       <button onClick={addPage} >Add Visitor</button>
-      <button onClick={() => { dialogOpen = true }} >Open Dialog</button>
-      <DynamicTable tableHeader={"Visitor List"} checkboxSelection={false} columns={columns} rows={rows && rows.length > 0 ? rows : []} pageSize={5} rowsPerPageOptions={5} />
-      {/* <ConfirmDialog title="Delete Confirmation" open={true} />
-
-     */}
+      <DynamicTable
+        tableHeader={"Visitor List"}
+        checkboxSelection={false}
+        columns={columns}
+        rows={rows && rows.length > 0 ? rows : []}
+        pageSize={constant.TABLE.DEFAULT_PAGE_SIZE}
+        rowsPerPageOptions={constant.TABLE.DEFAULT_ROWS_PER_PAGE}
+      />
 
     </>
   )

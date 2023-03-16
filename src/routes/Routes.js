@@ -7,7 +7,7 @@ import Login from '../components/Login'
 import Dashboard from '../pages/Dashboard';
 import { VisitorForm } from '../components/CreateVisitor'
 import { Route, Routes } from 'react-router-dom';
-import Layout from '../pages/Layout';
+import Layout from '../layout/Layout';
 import VisitorRoutes from './VisitorRoutes';
 
 const AppRoutes = () => {

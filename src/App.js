@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react'
 import MyRoutes from './routes/Routes';
-import Layout from './pages/Layout';
+import Layout from './layout/Layout';
 
 function App() {
   return (

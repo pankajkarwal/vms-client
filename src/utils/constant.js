@@ -40,5 +40,9 @@ export default{
             DELETE_HEADER:" Visitor Delete?",
             DELETE_TEXT:"Are you sure you want to delete this visitor record ?"
         }
+    },
+   TABLE:{
+        DEFAULT_PAGE_SIZE:10,
+        DEFAULT_ROWS_PER_PAGE:10
     }
 }

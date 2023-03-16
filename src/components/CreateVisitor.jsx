@@ -31,7 +31,6 @@ export const VisitorForm = () => {
 
             }).catch((err) => {
                 Toast(err && err.data && err.data.error ? err.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
-                console.log("Error is", err.message());
             })
 
         }
