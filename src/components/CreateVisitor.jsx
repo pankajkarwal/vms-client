@@ -5,35 +5,41 @@ import TextField from '@mui/material/TextField';
 import constant from '../utils/constant';
 import Button from '@mui/material/Button';
 import { addVisitor, getVisitor, updateVisitor } from '../services/VisitorService'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Outlet, useLocation, redirect } from 'react-router-dom'
+import Toast from './../utils/Toast';
 
-export const CreateVisitor = () => {
-    let history = new useNavigate();
-    let { id } = useParams();
+export const VisitorForm = () => {
+    const navigate = new useNavigate();
+    const params = new useParams();
+
+    let visitorId = params && params.id ? params.id : ""
     const [data, setData] = useState({
         name: '',
         address: '',
         contactNo: ''
     });
 
-    let visitorId = "";
 
     useEffect(() => {
         // Component did Mount
-
-        if (id) {
-            visitorId = id;
-
+       
+        if (visitorId) {
             // get data from database and set into state variables
-            getVisitor(id).then((res) => {
-                console.log("Response is ", res);
+            getVisitor(visitorId).then((res) => {
                 const resData = res.data.data;
                 setData(resData);
 
             }).catch((err) => {
+                Toast(err && err.data && err.data.error ? err.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
                 console.log("Error is", err.message());
             })
 
+        }
+
+        // Cleaning the code
+        return () => {
+            visitorId = ""
+            setData([])
         }
     }, [])
     const handleChange = (e) => {
@@ -41,21 +47,27 @@ export const CreateVisitor = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (id) {
-            updateVisitor(data).then((res) => {
-                console.log("Data Updated succesfully!!!")
+        if (visitorId) {
+            updateVisitor({ visitorDetails: data }).then((res) => {
+                // navigate(constant.APP_ROUTES.GET_VISITOR);
+                Toast(constant.SUCCESS.UPDATED_VISITOR, 'success')
+                navigate(-1)
+
             }).catch((err) => {
                 throw err.message;
             })
         }
         else {
             addVisitor(data).then((res) => {
-                console.log("Data saved succesfully!!!")
-            }).catch((err) => {
-                throw err.message;
+                //navigate(constant.APP_ROUTES.GET_VISITOR)
+                Toast(constant.SUCCESS.ADDED_VISITOR, 'success')
+                navigate(-1)
+            }).catch((error) => {
+                Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
             })
         }
     }
+    
     const formData = (
         <Box
             component="form"
@@ -95,20 +107,19 @@ export const CreateVisitor = () => {
                     <Button variant="contained" size="medium" onClick={(e) => handleSubmit(e)}>
                         Save
                     </Button>
-                    <Button variant="contained" size="medium">
+                    <Button variant="contained" size="medium" onClick={(e) =>  navigate(-1,{replace:true})}>
                         Cancel
                     </Button>
                 </Box>
             </div>
         </Box>
     );
+
+
     return (
         <div>
-            { id ? 
-             <Lightbox title={constant.PAGES.VISITOR.EDIT_VISTOR_MODAL_TITLE} content={formData} buttonTitle={constant.PAGES.VISITOR.EDIT_VISITOR_BUTTON_TEXT} />
-            :
-         <Lightbox title={constant.PAGES.VISITOR.ADD_VISTOR_MODAL_TITLE} content={formData} buttonTitle={constant.PAGES.VISITOR.ADD_VISITOR_BUTTON_TEXT} />
-        }
-            </div>
+
+            {formData}
+        </div>
     )
 }

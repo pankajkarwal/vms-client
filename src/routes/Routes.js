@@ -4,21 +4,23 @@ import constant from '../utils/constant'
 import ArticleList from './../pages/ArticleList';
 import NotFound from './../pages/NotFound'
 import Login from '../components/Login'
-import { CreateVisitor } from '../components/CreateVisitor'
-import {  Route, Routes } from 'react-router-dom';
+import Dashboard from '../pages/Dashboard';
+import { VisitorForm } from '../components/CreateVisitor'
+import { Route, Routes } from 'react-router-dom';
 import Layout from '../pages/Layout';
+import VisitorRoutes from './VisitorRoutes';
 
 const AppRoutes = () => {
     return (
-        <>
-            <Routes>
-                <Route path={constant.APP_ROUTES.LOGIN} element={<Layout />} />
-                <Route path={constant.APP_ROUTES.GET_VISITOR} element={<VisitorList />} />
+        <Routes>
+            <Route path={constant.APP_ROUTES.LOGIN}  >
+                <Route index element={<Dashboard />} />
+                <Route path={constant.APP_ROUTES.GET_VISITOR + "/*"} element={<VisitorRoutes /> }/>
                 <Route path={constant.APP_ROUTES.ARTICLE_LIST} element={<ArticleList />} />
-                <Route path={constant.APP_ROUTES.EDIT_VISITOR} element={<CreateVisitor />} />
                 <Route path='*' element={<NotFound />} />
-            </Routes>
-        </>
+            </Route>
+        </Routes>
+
     )
 }
 
