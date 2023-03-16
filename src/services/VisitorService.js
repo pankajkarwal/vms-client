@@ -1,11 +1,13 @@
 import { Axios } from "../lib/axios"
 import constant from "../utils/constant";
+import { formatRoute } from 'react-router-named-routes';
 
 export {
 addVisitor,
 getVisitors,
 getVisitor,
-updateVisitor
+updateVisitor,
+deleteVisitor
 }
 
 const addVisitor = async (payload) => {
@@ -22,4 +24,9 @@ const getVisitor = async (id) => {
 
 const updateVisitor = async (payload) => {
     return await Axios.put(constant.SERVICES_ROUTES.UPDATE_VISITOR,payload)
+}
+
+const deleteVisitor = async (id) => {
+    const url =formatRoute(constant.SERVICES_ROUTES.DELETE_VISITOR,{id: id});
+    return await Axios.delete(url)
 }

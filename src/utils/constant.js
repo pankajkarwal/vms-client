@@ -1,7 +1,10 @@
 export default{
     LABEL_CONSTANTS:{
         DASHBOARD: {
-            APP_NAME:'VMS'
+            APP_NAME:'VMS- Visitor Management System'
+        },
+        VISITOR:{
+            BTN_ADD_VISITOR:'Add Visitor'
         }
     },
     APP_ROUTES:{
@@ -17,14 +20,16 @@ export default{
             ADD_VISITOR_BUTTON_TEXT:'Add Visitor',
             EDIT_VISITOR_BUTTON_TEXT:'Edit Visitor',
             ADD_VISTOR_MODAL_TITLE:'Create Visitor',
-            EDIT_VISTOR_MODAL_TITLE:'Edit Visitor'
+            EDIT_VISTOR_MODAL_TITLE:'Edit Visitor',
+            LIST_PAGE_CAPTION:'List of Visitor'
         }
     },
     SERVICES_ROUTES : {
         FETCH_ALL_VISITOR:'visitors/fetch',
         ADD_VISITOR:'visitors/add',
         SINGLE_VISITOR:'visitors/get',
-        UPDATE_VISITOR: 'visitors/update'
+        UPDATE_VISITOR: 'visitors/update',
+        DELETE_VISITOR: 'visitors/delete/:id'
     },
     ERRORS:{
         DEFAULT_ERROR:"Internal Server Error"

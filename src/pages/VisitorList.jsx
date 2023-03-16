@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { addVisitor, getVisitors } from '../services/VisitorService'
+import * as apiServices from '../services/VisitorService'
 import { DynamicTable } from '@opensource/bit-scope.dynamic-table'
-import { VisitorForm } from '../components/CreateVisitor';
 import constant from '../utils/constant';
-import { Link, NavLink, Outlet, redirect, useNavigate } from 'react-router-dom';
-import { Button, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Button, IconButton, Box } from '@mui/material';
 import Toast from '../utils/Toast';
 import { formatRoute } from 'react-router-named-routes'
 import ConfirmDialog from '../utils/ConfirmDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 
 export default function VisitorList() {
   const [rows, setRows] = useState([])
-  let dialogOpen = false;
-  const [id, setId] = useState(0);
+  const [vId, setVId] = useState(0);
   const [openBox, setOpenBox] = useState(false);
-  const [openPopup, setOpenPopup] = useState(false)
-  const [clickedRow, setClickedRow] = React.useState();
-  const onDelete = (visitorId) => {
 
+  const onDelete = (e) => {
+    e.stopPropagation()
     // Call the api for deleting the visitor record from the database
-    console.log("VIsitor Id", visitorId)
+    apiServices.deleteVisitor(vId).then((res) => {
+      if (res && res.data) {
+        Toast(constant.SUCCESS.DELETED_VISITOR, 'success')
+        navigate(0);
+      }
+    }).catch((error) => {
+      Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
+    })
+
   };
   const navigate = useNavigate();
 
@@ -34,33 +40,29 @@ export default function VisitorList() {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Name', width: 200 },
-    { field: 'address', headerName: 'Address', width: 300 },
-    { field: 'contactNo', headerName: 'Contact No', width: 100 },
-    { field: 'created_at', headerName: 'Created On', width: 200 },
+    { field: 'id', headerName: 'ID', width: 70 ,headerClassName: 'super-app-theme--header'},
+    { field: 'name', headerName: 'Name', width: 200,headerClassName: 'super-app-theme--header' },
+    { field: 'address', headerName: 'Address', width: 300,headerClassName: 'super-app-theme--header' },
+    { field: 'contactNo', headerName: 'Contact No', width: 150 ,headerClassName: 'super-app-theme--header'},
+    { field: 'created_at', headerName: 'Created On', width: 200 ,headerClassName: 'super-app-theme--header'},
     {
-      field: 'actions', headerName: 'Actions', width: 400, renderCell: (params) => {
+      field: 'actions', headerName: 'Actions', width: 500,headerClassName: 'super-app-theme--header', renderCell: (params) => {
         return (
           <>
-            <Button
-              onClick={(e) => editPage(params.row._id)}
-              variant="contained"
-              color="success"
-            >
-              Edit
-            </Button>
-
+            <IconButton aria-label="edit" onClick={(e) => editPage(params.row._id)} >
+              <ModeEditIcon />
+            </IconButton>
             &nbsp;&nbsp;
             <div>
-              <IconButton aria-label="delete" onClick={() => setOpenBox(true)}>
+              <IconButton aria-label="delete" onClick={() => { setOpenBox(true); setVId(params.row._id) }}>
                 <DeleteIcon />
               </IconButton>
               <ConfirmDialog
+                id={params.row._id}
                 title={constant.MODELS.VISITOR.DELETE_HEADER}
                 open={openBox}
                 setOpen={setOpenBox}
-                onConfirm={(e) => onDelete(e, params.row._id)}
+                onConfirm={onDelete}
               >
                 {constant.MODELS.VISITOR.DELETE_TEXT}
               </ConfirmDialog>
@@ -72,7 +74,8 @@ export default function VisitorList() {
     }
   ]
   useEffect(() => {
-    getVisitors().then((res) => {
+    // Component did Mount
+    apiServices.getVisitors().then((res) => {
       const filteredData = res && res.data && res.data.data && res.data.data.length > 0 && res.data.data.map((item, i) => {
         return {
           ...item,
@@ -85,20 +88,59 @@ export default function VisitorList() {
       Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
     })
   }, [])
-  const handlePopup = (val) => {
-    setOpenPopup(val)
+  function Item(props) {
+    const { sx, ...other } = props;
+    return (
+      <Box
+        sx={{
+          p: 1,
+          m: 1,
+          fontSize: '0.875rem',
+          fontWeight: '700',
+          ...sx,
+        }}
+        {...other}
+      />
+    );
   }
   return (
     <>
-      <button onClick={addPage} >Add Visitor</button>
-      <DynamicTable
-        tableHeader={"Visitor List"}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          p: 1,
+          m: 1,
+          bgcolor: 'background.paper',
+          borderRadius: 1,
+        }}
+      >
+        <Item></Item>
+        <h4><Item>{constant.PAGES.VISITOR.LIST_PAGE_CAPTION}</Item></h4>
+        <Item> <Button variant="contained" onClick={addPage} >{constant.LABEL_CONSTANTS.VISITOR.BTN_ADD_VISITOR}</Button></Item>
+      </Box>
+
+      <Box
+      sx={{
+        height: 300,
+        width: '100%',
+        '& .super-app-theme--header': {
+          backgroundColor: '#3f51b5',
+          color:'white'
+        },
+      }}
+    >
+     <DynamicTable
         checkboxSelection={false}
         columns={columns}
         rows={rows && rows.length > 0 ? rows : []}
         pageSize={constant.TABLE.DEFAULT_PAGE_SIZE}
         rowsPerPageOptions={constant.TABLE.DEFAULT_ROWS_PER_PAGE}
+        headerClassName={'super-app-theme--header'}
       />
+    </Box>
+
+     
 
     </>
   )

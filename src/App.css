@@ -78,3 +78,6 @@ label{
   -webkit-animation: spin 1s linear infinite;
   animation: spin 1s linear infinite;
 }
+.MuiAppBar-colorPrimary{
+  background-color: 'rgba(255, 7, 0, 0.55)' !important;
+}
