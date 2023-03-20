@@ -30,7 +30,7 @@ export default function ArticleList() {
     return (
         <div>
             List of Articles in cards DataGrid  
-            <Link to={constant.APP_ROUTES.GET_VISITOR}>Visitor List</Link>
+            <Link to={constant.APP_ROUTES.VISITOR.GET_VISITOR}>Visitor List</Link>
             <Container>
 
                 <Grid container >

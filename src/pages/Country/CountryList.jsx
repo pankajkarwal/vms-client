@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import * as apiServices from '../services/VisitorService'
+import * as apiServices from '../../services/CountryService'
 import { DynamicTable } from '@opensource/bit-scope.dynamic-table'
-import constant from '../utils/constant';
+import constant from '../../utils/constant';
 import { useNavigate } from 'react-router-dom';
 import { Button, IconButton, Box } from '@mui/material';
-import Toast from '../utils/Toast';
+import Toast from '../../utils/Toast';
 import { formatRoute } from 'react-router-named-routes'
-import ConfirmDialog from '../utils/ConfirmDialog';
+import ConfirmDialog from '../../utils/ConfirmDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { DateConversion } from '../../utils/DateConversion';
 
 
-export default function VisitorList() {
+export default function CountryList() {
   const [rows, setRows] = useState([])
   const [vId, setVId] = useState(0);
   const [openBox, setOpenBox] = useState(false);
 
   const onDelete = (e) => {
     e.stopPropagation()
-    // Call the api for deleting the visitor record from the database
-    apiServices.deleteVisitor(vId).then((res) => {
+    // Call the api for deleting the Country record from the database
+    apiServices.deleteCountry(vId).then((res) => {
       if (res && res.data) {
-        Toast(constant.SUCCESS.DELETED_VISITOR, 'success')
+        Toast(constant.SUCCESS.COUNTRY.DELETED_COUNTRY, 'success')
         navigate(0);
       }
     }).catch((error) => {
@@ -31,20 +32,18 @@ export default function VisitorList() {
   };
   const navigate = useNavigate();
 
-  const editPage = (visitorId) => {
-    navigate(formatRoute(constant.APP_ROUTES.EDIT_VISITOR, { id: visitorId }));
+  const editPage = (countryId) => {
+    navigate(formatRoute(constant.APP_ROUTES.COUNTRY.EDIT_COUNTRY, { id: countryId }));
   }
 
   const addPage = () => {
-    navigate(constant.APP_ROUTES.ADD_VISITOR);
+    navigate(constant.APP_ROUTES.COUNTRY.ADD_COUNTRY);
   }
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 ,headerClassName: 'super-app-theme--header'},
     { field: 'name', headerName: 'Name', width: 200,headerClassName: 'super-app-theme--header' },
-    { field: 'address', headerName: 'Address', width: 300,headerClassName: 'super-app-theme--header' },
-    { field: 'contactNo', headerName: 'Contact No', width: 150 ,headerClassName: 'super-app-theme--header'},
-    { field: 'created_at', headerName: 'Created On', width: 200 ,headerClassName: 'super-app-theme--header'},
+    { field: 'created_at', headerName: 'Date of Creation', width: 250 ,headerClassName: 'super-app-theme--header'},
     {
       field: 'actions', headerName: 'Actions', width: 500,headerClassName: 'super-app-theme--header', renderCell: (params) => {
         return (
@@ -59,12 +58,12 @@ export default function VisitorList() {
               </IconButton>
               <ConfirmDialog
                 id={params.row._id}
-                title={constant.MODELS.VISITOR.DELETE_HEADER}
+                title={constant.MODELS.COUNTRY.DELETE_HEADER}
                 open={openBox}
                 setOpen={setOpenBox}
                 onConfirm={onDelete}
               >
-                {constant.MODELS.VISITOR.DELETE_TEXT}
+                {constant.MODELS.COUNTRY.DELETE_TEXT}
               </ConfirmDialog>
             </div>
 
@@ -75,14 +74,18 @@ export default function VisitorList() {
   ]
   useEffect(() => {
     // Component did Mount
-    apiServices.getVisitors().then((res) => {
+    apiServices.getCountries().then((res) => {
       const filteredData = res && res.data && res.data.data && res.data.data.length > 0 && res.data.data.map((item, i) => {
+        let created_at =null
+        if(item.created_at){
+           item.created_at = DateConversion(item.created_at,'MMMM Do YYYY, h:mm:ss a')
+        }
         return {
           ...item,
+          other_date: created_at,
           id: i + 1
         }
       });
-
       setRows(filteredData)
     }).catch((error) => {
       Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
@@ -116,8 +119,8 @@ export default function VisitorList() {
         }}
       >
         <Item></Item>
-        <h4><Item>{constant.PAGES.VISITOR.LIST_PAGE_CAPTION}</Item></h4>
-        <Item> <Button variant="contained" onClick={addPage} >{constant.LABEL_CONSTANTS.VISITOR.BTN_ADD_VISITOR}</Button></Item>
+        <h4><Item>{constant.PAGES.COUNTRY.LIST_PAGE_CAPTION}</Item></h4>
+        <Item> <Button variant="contained" onClick={addPage} >{constant.LABEL_CONSTANTS.COUNTRY.BTN_ADD_VISITOR}</Button></Item>
       </Box>
 
       <Box

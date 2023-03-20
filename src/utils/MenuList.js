@@ -14,7 +14,7 @@ export default [
     },
     {
         title:"Visitor List",
-        path:constant.APP_ROUTES.GET_VISITOR,
+        path:constant.APP_ROUTES.VISITOR.GET_VISITOR,
         icon:<SupervisedUserCircleIcon />
     },
     {
@@ -23,11 +23,12 @@ export default [
         icon:<ApartmentIcon />
     },
     {
-        title:"City Master",
-        icon:<LocationCityIcon />
+        title:"Country Master",
+        path:constant.APP_ROUTES.COUNTRY.GET_COUNTRY,
+        icon:<PublicIcon />
     },
     {
-        title:"Country Master",
-        icon:<PublicIcon />
+        title:"City Master",
+        icon:<LocationCityIcon />
     }
 ]

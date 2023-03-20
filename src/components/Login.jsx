@@ -7,7 +7,7 @@ export default function Login() {
     <div>
         Welcome to Login Page<br></br>
         <NavLink to={constant.APP_ROUTES.ARTICLE_LIST} >Article List</NavLink> <br></br>
-        <NavLink to={constant.APP_ROUTES.GET_VISITOR} >Visitor List</NavLink>
+        <NavLink to={constant.APP_ROUTES.VISITOR.GET_VISITOR} >Visitor List</NavLink>
         <Outlet />
     </div>
   )

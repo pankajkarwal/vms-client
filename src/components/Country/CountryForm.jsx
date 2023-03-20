@@ -1,36 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { Lightbox } from '@opensource/bit-scope.lightbox'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import constant from '../utils/constant';
+import constant from '../../utils/constant';
 import Button from '@mui/material/Button';
-import { addVisitor, getVisitor, updateVisitor } from '../services/VisitorService'
+import * as countryService from '../../services/CountryService'
 import { useParams, useNavigate, Outlet, useLocation, redirect } from 'react-router-dom'
-import Toast from './../utils/Toast';
+import Toast from './../../utils/Toast';
 
-export const VisitorForm = () => {
+export const CountryForm = () => {
     const navigate = new useNavigate();
     const params = new useParams();
 
-    let visitorId = params && params.id ? params.id : ""
+    let countryId = params && params.id ? params.id : ""
     const [data, setData] = useState({
         name: '',
-        address: '',
-        contactNo: ''
     });
+    
     const [dataError, setDataError] = useState({
         nameError: '',
-        addressError: '',
-        contactNoError: ''
     });
-
 
     useEffect(() => {
         // Component did Mount
        
-        if (visitorId) {
+        if (countryId) {
             // get data from database and set into state variables
-            getVisitor(visitorId).then((res) => {
+            countryService.getCountry(countryId).then((res) => {
                 const resData = res.data.data;
                 setData(resData);
 
@@ -42,7 +37,7 @@ export const VisitorForm = () => {
 
         // Cleaning the code
         return () => {
-            visitorId = ""
+            countryId = ""
             setData([])
         }
     }, [])
@@ -53,26 +48,14 @@ export const VisitorForm = () => {
         e.preventDefault();
         if(data.name =="" && data.name.trim() =="")
             {
-                setDataError({...dataError,nameError: 'Visitor name field is required'})
+                setDataError({...dataError,nameError: 'Country name field is required'})
                 // errors.nameError='Name field is required'
                 return false;
             }
-            if(data.address =="" && data.address.trim() =="")
-            {
-                setDataError({...dataError,addressError: 'Address field is required'})
-                // errors.nameError='Name field is required'
-                return false;
-            }
-            if(data.contactNo =="" && data.contactNo.trim() =="")
-            {
-                setDataError({...dataError,contactNoError: 'Contact Number field is required'})
-                // errors.nameError='Name field is required'
-                return false;
-            }
-        if (visitorId) {
-            updateVisitor({ visitorDetails: data }).then((res) => {
-                // navigate(constant.APP_ROUTES.GET_VISITOR);
-                Toast(constant.SUCCESS.VISITOR.UPDATED_VISITOR, 'success')
+        if (countryId) {
+            countryService.updateCountry({ countryDetails: data }).then((res) => {
+                
+                Toast(constant.SUCCESS.COUNTRY.UPDATED_COUNTRY, 'success')
                 navigate(-1)
 
             }).catch((err) => {
@@ -80,9 +63,10 @@ export const VisitorForm = () => {
             })
         }
         else {
-            addVisitor(data).then((res) => {
-                //navigate(constant.APP_ROUTES.GET_VISITOR)
-                Toast(constant.SUCCESS.VISITOR.ADDED_VISITOR, 'success')
+            
+            countryService.addCountry(data).then((res) => {
+                if(res.data.data)
+                Toast(constant.SUCCESS.COUNTRY.ADDED_COUNTRY, 'success')
                 navigate(-1)
             }).catch((error) => {
                 Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
@@ -102,32 +86,14 @@ export const VisitorForm = () => {
             <div>
                 <TextField
                     id="outlined-error"
-                    label="Visitor Name"
-                    name='name'
+                    label="Country Name"
+                    name="name"
                     value={data.name}
                     onChange={(e) => handleChange(e)}
                 />
-                 <label style={{"color":"red","fontSize":"15px"}}>{dataError.nameError}</label>
-                <TextField
-                    //   error
-                    id="outlined-error-helper-text"
-                    label="Contact Number"
-                    name='contactNo'
-                    value={data.contactNo}
-                    onChange={(e) => handleChange(e)}
-                />
-                 <label style={{"color":"red","fontSize":"15px"}}>{dataError.contactNoError}</label>
-            </div>
-
-            <div>
-                <TextField
-                    id="outlined-error"
-                    label="Address"
-                    name="address"
-                    value={data.address}
-                    onChange={(e) => handleChange(e)}
-                />
-                 <label style={{"color":"red","fontSize":"15px"}}>{dataError.addressError}</label>
+                <br />
+                <label style={{"color":"red","fontSize":"15px"}}>{dataError.nameError}</label>
+               
                 <Box sx={{ '& button': { m: 1 } }}>
                     <Button variant="contained" size="medium" onClick={(e) => handleSubmit(e)}>
                         Save
@@ -136,6 +102,7 @@ export const VisitorForm = () => {
                         Cancel
                     </Button>
                 </Box>
+               
             </div>
         </Box>
     );
