@@ -8,6 +8,9 @@ export default{
         },
         COUNTRY:{
             BTN_ADD_VISITOR:'Add Country'
+        },
+        CITY:{
+            BTN_ADD_VISITOR:'Add City'
         }
     },
     APP_ROUTES:{
@@ -25,6 +28,12 @@ export default{
             EDIT_COUNTRY:'edit/:id',
             ADD_COUNTRY: 'add'
         },
+        CITY:{
+            GET_CITY:'city',
+            UPDATE_CITY:'update',
+            EDIT_CITY:'edit/:id',
+            ADD_CITY: 'add'
+        },
     },
     PAGES:{
         VISITOR:{
@@ -40,6 +49,13 @@ export default{
             ADD_COUNTRY_MODAL_TITLE:'Create Country',
             EDIT_COUNTRY_MODAL_TITLE:'Edit Country',
             LIST_PAGE_CAPTION:'List of Country'
+        },
+        CITY:{
+            ADD_CITY_BUTTON_TEXT:'Add City',
+            EDIT_CITY_BUTTON_TEXT:'Edit City',
+            ADD_CITY_MODAL_TITLE:'Create City',
+            EDIT_CITY_MODAL_TITLE:'Edit City',
+            LIST_PAGE_CAPTION:'List of City'
         }
     },
     SERVICES_ROUTES : {
@@ -56,6 +72,13 @@ export default{
             SINGLE_COUNTRY:'country/get',
             UPDATE_COUNTRY: 'country/update',
             DELETE_COUNTRY: 'country/delete/:id'
+        },
+        CITY:{
+            FETCH_ALL_CITY:'city/fetch',
+            ADD_CITY:'city/add',
+            SINGLE_CITY:'city/get',
+            UPDATE_CITY: 'city/update',
+            DELETE_CITY: 'city/delete/:id'
         }
 
     },
@@ -72,6 +95,11 @@ export default{
             ADDED_COUNTRY:"Country added sucessfully",
             UPDATED_COUNTRY:"Country updated sucessfully",
             DELETED_COUNTRY:"Country deleted sucessfully"  
+        },
+        CITY:{
+            ADDED_CITY:"City added sucessfully",
+            UPDATED_CITY:"City updated sucessfully",
+            DELETED_CITY:"City deleted sucessfully"  
         }
     },
     MODELS:{
@@ -82,6 +110,10 @@ export default{
         COUNTRY:{
             DELETE_HEADER:" Country Delete?",
             DELETE_TEXT:"Are you sure you want to delete this country record ?"
+        },
+        CITY:{
+            DELETE_HEADER:" City Delete?",
+            DELETE_TEXT:"Are you sure you want to delete this city record ?"
         }
     },
    TABLE:{

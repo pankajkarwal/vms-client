@@ -29,6 +29,7 @@ export default [
     },
     {
         title:"City Master",
+        path:constant.APP_ROUTES.CITY.GET_CITY,
         icon:<LocationCityIcon />
     }
 ]

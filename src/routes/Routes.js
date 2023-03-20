@@ -6,6 +6,7 @@ import Dashboard from '../pages/Dashboard';
 import { Route, Routes } from 'react-router-dom';
 import VisitorRoutes from './VisitorRoutes';
 import CountryRoutes from './CountryRoutes';
+import CityRoutes from './CityRoutes';
 
 const AppRoutes = () => {
     return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
                 <Route index element={<Dashboard />} />
                 <Route path={constant.APP_ROUTES.VISITOR.GET_VISITOR + "/*"} element={<VisitorRoutes /> }/>
                 <Route path={constant.APP_ROUTES.COUNTRY.GET_COUNTRY + "/*"} element={<CountryRoutes /> }/>
+                <Route path={constant.APP_ROUTES.CITY.GET_CITY + "/*"} element={<CityRoutes /> }/>
                 <Route path={constant.APP_ROUTES.ARTICLE_LIST} element={<ArticleList />} />
                 <Route path='*' element={<NotFound />} />
             </Route>

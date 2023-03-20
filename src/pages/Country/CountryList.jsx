@@ -16,6 +16,7 @@ export default function CountryList() {
   const [rows, setRows] = useState([])
   const [vId, setVId] = useState(0);
   const [openBox, setOpenBox] = useState(false);
+  const navigate = useNavigate();
 
   const onDelete = (e) => {
     e.stopPropagation()
@@ -30,7 +31,6 @@ export default function CountryList() {
     })
 
   };
-  const navigate = useNavigate();
 
   const editPage = (countryId) => {
     navigate(formatRoute(constant.APP_ROUTES.COUNTRY.EDIT_COUNTRY, { id: countryId }));
