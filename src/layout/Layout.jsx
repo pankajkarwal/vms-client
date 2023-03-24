@@ -17,6 +17,7 @@ import Menu from "@material-ui/core/Menu";
 import constant from "../utils/constant";
 import ToastDesign from '../components/ToastDesign';
 import Header from './Header';
+import { Outlet } from 'react-router-dom';
 
 
 const drawerWidth = 220;
@@ -101,6 +102,7 @@ class Layout extends React.Component {
     open: false,
     anchorEl: null
   };
+ 
 
   handleDrawerOpen = () => {
     this.setState({ open: !this.state.open });
@@ -118,12 +120,14 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    console.log("layout Render")
+    const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     return (
+      <>
+      
       <div className={classes.root}>
-       
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -204,15 +208,17 @@ class Layout extends React.Component {
         >
           <div className={classes.toolbar} />
           <Sidebar />
-
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
          
           <LayoutContent />
+          
          <ToastDesign />
         </main>
+        
       </div>
+      </>
     )
   }
 }

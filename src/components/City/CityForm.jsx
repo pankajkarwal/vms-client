@@ -46,7 +46,7 @@ export const CityForm = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(data.name =="" && data.name.trim() =="")
+        if(data.name ==="" && data.name.trim() ==="")
             {
                 setDataError({...dataError,nameError: 'City name field is required'})
               

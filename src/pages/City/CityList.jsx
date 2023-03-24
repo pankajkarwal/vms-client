@@ -78,7 +78,6 @@ export default function CityList() {
     // Component did Mount
     apiServices.getCities().then((res) => {
       const filteredData = res && res.data && res.data.data && res.data.data.length > 0 && res.data.data.map((item, i) => {
-        let created_at = null
         if (item.created_at) {
           item.created_at = DateConversion(item.created_at, 'MMMM Do YYYY, h:mm:ss a')
         }

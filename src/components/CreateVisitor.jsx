@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Lightbox } from '@opensource/bit-scope.lightbox'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import constant from '../utils/constant';
 import Button from '@mui/material/Button';
 import { addVisitor, getVisitor, updateVisitor } from '../services/VisitorService'
-import { useParams, useNavigate, Outlet, useLocation, redirect } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import Toast from './../utils/Toast';
 
 export const VisitorForm = () => {
@@ -51,22 +50,19 @@ export const VisitorForm = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(data.name =="" && data.name.trim() =="")
+        if(data.name ==="" && data.name.trim() ==="")
             {
                 setDataError({...dataError,nameError: 'Visitor name field is required'})
-                // errors.nameError='Name field is required'
                 return false;
             }
-            if(data.address =="" && data.address.trim() =="")
+            if(data.address ==="" && data.address.trim() ==="")
             {
                 setDataError({...dataError,addressError: 'Address field is required'})
-                // errors.nameError='Name field is required'
                 return false;
             }
-            if(data.contactNo =="" && data.contactNo.trim() =="")
+            if(data.contactNo ==="" && data.contactNo.trim() ==="")
             {
                 setDataError({...dataError,contactNoError: 'Contact Number field is required'})
-                // errors.nameError='Name field is required'
                 return false;
             }
         if (visitorId) {

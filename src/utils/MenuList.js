@@ -3,6 +3,7 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import PublicIcon from '@mui/icons-material/Public';
+import PersonIcon from '@mui/icons-material/Person';
 
 import React from 'react'
 import constant from './constant';
@@ -31,5 +32,10 @@ export default [
         title:"City Master",
         path:constant.APP_ROUTES.CITY.GET_CITY,
         icon:<LocationCityIcon />
+    },
+    {
+        title:"User Master",
+        path:constant.APP_ROUTES.USER.GET_USER,
+        icon:<PersonIcon />
     }
 ]

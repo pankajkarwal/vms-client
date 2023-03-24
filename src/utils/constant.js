@@ -11,10 +11,14 @@ export default{
         },
         CITY:{
             BTN_ADD_VISITOR:'Add City'
+        },
+        USER:{
+            BTN_ADD_USER:'Add User'
         }
     },
     APP_ROUTES:{
         LOGIN:'/',
+        DASHBOARD:'dashboard',
         ARTICLE_LIST:'article/list',
         VISITOR:{
             GET_VISITOR:'visitors',
@@ -33,6 +37,12 @@ export default{
             UPDATE_CITY:'update',
             EDIT_CITY:'edit/:id',
             ADD_CITY: 'add'
+        },
+        USER:{
+            GET_USER:'users',
+            UPDATE_USER:'update',
+            EDIT_USER:'edit/:id',
+            ADD_USER: 'add'
         },
     },
     PAGES:{
@@ -56,6 +66,13 @@ export default{
             ADD_CITY_MODAL_TITLE:'Create City',
             EDIT_CITY_MODAL_TITLE:'Edit City',
             LIST_PAGE_CAPTION:'List of City'
+        },
+        USER:{
+            ADD_USER_BUTTON_TEXT:'Add User',
+            EDIT_USER_BUTTON_TEXT:'Edit User',
+            ADD_USER_MODAL_TITLE:'Create User',
+            EDIT_USER_MODAL_TITLE:'Edit User',
+            LIST_PAGE_CAPTION:'List of User'
         }
     },
     SERVICES_ROUTES : {
@@ -79,7 +96,16 @@ export default{
             SINGLE_CITY:'city/get',
             UPDATE_CITY: 'city/update',
             DELETE_CITY: 'city/delete/:id'
-        }
+        },
+        USER:{
+            FETCH_ALL_USER:'user/fetch',
+            ADD_USER:'user/add',
+            SINGLE_USER:'user/get',
+            UPDATE_USER: 'user/update',
+            DELETE_USER: 'user/delete/:id',
+            LOGIN:'user/login'
+        },
+        
 
     },
     ERRORS:{
@@ -100,6 +126,11 @@ export default{
             ADDED_CITY:"City added sucessfully",
             UPDATED_CITY:"City updated sucessfully",
             DELETED_CITY:"City deleted sucessfully"  
+        },
+        USER:{
+            ADDED_USER:"User added sucessfully",
+            UPDATED_USER:"User updated sucessfully",
+            DELETED_USER:"User deleted sucessfully"  
         }
     },
     MODELS:{
@@ -114,6 +145,10 @@ export default{
         CITY:{
             DELETE_HEADER:" City Delete?",
             DELETE_TEXT:"Are you sure you want to delete this city record ?"
+        },
+        USER:{
+            DELETE_HEADER:" User Delete?",
+            DELETE_TEXT:"Are you sure you want to delete this user record ?"
         }
     },
    TABLE:{

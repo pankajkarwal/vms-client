@@ -10,7 +10,7 @@ export default function Dashboard() {
     }
     return (
         <div>
-            <img style={imagStyle} src={dashboardImage} />
+            <img alt='' style={imagStyle} src={dashboardImage} />
         </div>
     )
 }

@@ -1,12 +1,13 @@
 import './App.css';
 import React from 'react'
-import MyRoutes from './routes/Routes';
 import Layout from './layout/Layout';
+import AppRoutes from './routes/Routes';
 
 function App() {
   return (
     <div className="App">
-       <Layout />
+      
+       <AppRoutes />
        
     </div>
   );

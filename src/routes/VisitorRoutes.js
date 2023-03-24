@@ -6,7 +6,7 @@ import { VisitorForm } from './../components/CreateVisitor';
 
 export default function VisitorRoutes() {
     return <Routes>
-        <Route index element={<VisitorList />} />
+        <Route index element={ <VisitorList />} />
         <Route
             path={constant.APP_ROUTES.VISITOR.EDIT_VISITOR}
             element={<VisitorForm />} />

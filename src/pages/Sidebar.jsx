@@ -5,7 +5,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import menuList from "../utils/MenuList";
 import { Link } from "react-router-dom";
-import Toast from "../utils/Toast";
 class Sidebar extends React.Component {
   render() {
     return (

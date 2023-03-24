@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import constant from '../../utils/constant';
 import Button from '@mui/material/Button';
 import * as countryService from '../../services/CountryService'
-import { useParams, useNavigate, Outlet, useLocation, redirect } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import Toast from './../../utils/Toast';
 
 export const CountryForm = () => {
@@ -46,7 +46,7 @@ export const CountryForm = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(data.name =="" && data.name.trim() =="")
+        if(data.name ==="" && data.name.trim() ==="")
             {
                 setDataError({...dataError,nameError: 'Country name field is required'})
                 // errors.nameError='Name field is required'
