@@ -75,6 +75,7 @@ export default function VisitorList() {
     }
   ]
   useEffect(() => {
+    console.log("Called Visitor List")
     // Component did Mount
     apiServices.getVisitors().then((res) => {
       const filteredData = res && res.data && res.data.data && res.data.data.length > 0 && res.data.data.map((item, i) => {

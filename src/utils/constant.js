@@ -17,7 +17,8 @@ export default{
         }
     },
     APP_ROUTES:{
-        LOGIN:'/',
+        INDEX:'/',
+        LOGIN:'/login',
         DASHBOARD:'dashboard',
         ARTICLE_LIST:'article/list',
         VISITOR:{

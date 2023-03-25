@@ -10,7 +10,7 @@ import constant from './constant';
 export default [
     {
         title:"Home",
-        path:constant.APP_ROUTES.LOGIN,
+        path:constant.APP_ROUTES.INDEX,
         icon:<HomeIcon />
     },
     {

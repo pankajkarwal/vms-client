@@ -35,8 +35,8 @@ const AppRoutes = () => {
                 <Route path={constant.APP_ROUTES.USER.GET_USER + "/*"} element={<UserRoutes /> }/>
                 <Route path={constant.APP_ROUTES.ARTICLE_LIST} element={<ArticleList />} /> */}
                 <Route path='*' element={<NotFound />} />
-                <Route path='login' element={<Login />} />
                 </Route>
+                <Route path={constant.APP_ROUTES.LOGIN} element={<Login />} />
            
         </Routes>
 

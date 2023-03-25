@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { formatRoute } from 'react-router-named-routes';
+import constant from '../utils/constant';
 
 let baseURL
 baseURL = process.env.REACT_APP_VMS_API_URL
@@ -17,6 +19,9 @@ const init = () => {
 
 const handleSuccessRequest = (request) => {
   addLoadingIndicator();
+  if (localStorage.getItem('token'))
+    // try to check if token is expired...
+    request.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
   return request
 }
 
@@ -39,7 +44,9 @@ const handleError = (error) => {
   try {
     switch (error.response.status) {
       case 400:
-
+        removeLoadingIndicator()
+        localStorage.removeItem('token')
+        window.location.href = formatRoute(constant.APP_ROUTES.LOGIN, {})
         break
       case 401:
         break
