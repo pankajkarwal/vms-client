@@ -17,7 +17,7 @@ import Menu from "@material-ui/core/Menu";
 import constant from "../utils/constant";
 import ToastDesign from '../components/ToastDesign';
 import Header from './Header';
-import { Outlet } from 'react-router-dom';
+
 
 
 const drawerWidth = 220;
@@ -188,6 +188,7 @@ class Layout extends React.Component {
                 
                 <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                {localStorage.getItem("token") ? <MenuItem onClick={()=>{ localStorage.clear(); this.props.navigate(constant.APP_ROUTES.LOGIN)}}>Logout</MenuItem> :""}
               </Menu>
             </div>
           </Toolbar>
