@@ -1,117 +1,143 @@
 import React, { useState, useEffect } from 'react'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+
+import {
+  Grid,
+  makeStyles,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  CardHeader,
+} from "@material-ui/core"
+
+import { Formik, Form, Field } from "formik"
+import * as Yup from "yup"
 import constant from '../../utils/constant';
-import Button from '@mui/material/Button';
 import * as countryService from '../../services/CountryService'
 import { useParams, useNavigate } from 'react-router-dom'
 import Toast from './../../utils/Toast';
+import TextFieldWrapper from '../UI/CustomTextField'
+
+const useStyle = makeStyles((theme) => ({
+  padding: {
+    padding: theme.spacing(3),
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+}))
+
+
+
+//validation schema
+let validationSchema = Yup.object().shape({
+  name: Yup.string().required("Required"),
+})
 
 export const CountryForm = () => {
-    const navigate = new useNavigate();
-    const params = new useParams();
+  const classes = useStyle()
+  const navigate = new useNavigate();
+  const params = new useParams();
 
-    let countryId = params && params.id ? params.id : ""
-    const [data, setData] = useState({
-        name: '',
-    });
-    
-    const [dataError, setDataError] = useState({
-        nameError: '',
-    });
+  let countryId = params && params.id ? params.id : ""
+  //Data
+  const [initialValues, setInitialValues] = useState({})
 
-    useEffect(() => {
-        // Component did Mount
-       
-        if (countryId) {
-            // get data from database and set into state variables
-            countryService.getCountry(countryId).then((res) => {
-                const resData = res.data.data;
-                setData(resData);
+  useEffect(() => {
+    // Component did Mount
 
-            }).catch((err) => {
-                Toast(err && err.data && err.data.error ? err.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
-            })
+    if (countryId) {
+      // get data from database and set into state variables
+      countryService.getCountry(countryId).then((res) => {
+        const resData = res.data.data;
+        setInitialValues(resData)
 
-        }
 
-        // Cleaning the code
-        return () => {
-            countryId = ""
-            setData([])
-        }
-    }, [])
-    const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+      }).catch((err) => {
+        Toast(err && err.data && err.data.error ? err.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
+      })
+
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(data.name ==="" && data.name.trim() ==="")
-            {
-                setDataError({...dataError,nameError: 'Country name field is required'})
-                // errors.nameError='Name field is required'
-                return false;
-            }
-        if (countryId) {
-            countryService.updateCountry({ countryDetails: data }).then((res) => {
-                
-                Toast(constant.SUCCESS.COUNTRY.UPDATED_COUNTRY, 'success')
-                navigate(-1)
 
-            }).catch((err) => {
-                throw err.message;
-            })
-        }
-        else {
-            
-            countryService.addCountry(data).then((res) => {
-                if(res.data.data)
-                Toast(constant.SUCCESS.COUNTRY.ADDED_COUNTRY, 'success')
-                navigate(-1)
-            }).catch((error) => {
-                Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
-            })
-        }
+    // Cleaning the code
+    return () => {
+      countryId = ""
+
+      setInitialValues({})
     }
-    
-    const formData = (
-        <Box
-            component="form"
-            sx={{
-                '& .MuiTextField-root': { m: 1, width: '25ch' },
+  }, [])
+
+  const onSubmit = (values, { setSubmitting }) => {
+    if (countryId) {
+      countryService.updateCountry({ countryDetails: values }).then((res) => {
+        Toast(constant.SUCCESS.COUNTRY.UPDATED_COUNTRY, 'success')
+        navigate(-1)
+
+      }).catch((error) => {
+        setSubmitting(false);
+        Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
+      })
+    }
+    else {
+
+      countryService.addCountry(values).then((res) => {
+        if (res.data.data)
+          Toast(constant.SUCCESS.COUNTRY.ADDED_COUNTRY, 'success')
+        navigate(-1)
+      }).catch((error) => {
+        setSubmitting(false);
+        Toast(error && error.data && error.data.error ? error.data.error : constant.ERRORS.DEFAULT_ERROR, 'error')
+      })
+    }
+  }
+
+  return (
+    <Grid container justify="center" spacing={1}>
+      <Grid item md={6}>
+        <Card className={classes.padding}>
+          <CardHeader title="COUNTRY FORM"></CardHeader>
+          <Formik
+            enableReinitialize={true}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}>
+            {({ dirty, isValid, values, handleChange, handleBlur }) => {
+              return (
+                <Form>
+                  <CardContent>
+                    <Grid item container spacing={1} justify="center">
+                      <Grid item xs={12} sm={6} md={6}>
+
+                        <TextFieldWrapper
+                          focused
+                          label="Country Name"
+                          variant="outlined"
+                          fullWidth
+                          name="name"
+                          value={values.name}
+                        />
+                      </Grid>
+
+                    </Grid>
+                  </CardContent>
+                  <CardActions >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="Submit"
+                      className={classes.button}>
+                      Save
+                    </Button>
+                    <Button variant="contained" size="medium" onClick={(e) => navigate(-1, { replace: true })}>
+                      Cancel
+                    </Button>
+                  </CardActions>
+                </Form>
+              )
             }}
-            noValidate
-            autoComplete="off"
-        >
-            <div>
-                <TextField
-                    id="outlined-error"
-                    label="Country Name"
-                    name="name"
-                    value={data.name}
-                    onChange={(e) => handleChange(e)}
-                />
-                <br />
-                <label style={{"color":"red","fontSize":"15px"}}>{dataError.nameError}</label>
-               
-                <Box sx={{ '& button': { m: 1 } }}>
-                    <Button variant="contained" size="medium" onClick={(e) => handleSubmit(e)}>
-                        Save
-                    </Button>
-                    <Button variant="contained" size="medium" onClick={(e) =>  navigate(-1,{replace:true})}>
-                        Cancel
-                    </Button>
-                </Box>
-               
-            </div>
-        </Box>
-    );
-
-
-    return (
-        <div>
-
-            {formData}
-        </div>
-    )
+          </Formik>
+        </Card>
+      </Grid>
+    </Grid>
+  )
 }

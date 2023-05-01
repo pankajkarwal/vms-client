@@ -49,6 +49,9 @@ const handleError = (error) => {
         window.location.href = formatRoute(constant.APP_ROUTES.LOGIN, {})
         break
       case 401:
+        removeLoadingIndicator()
+        localStorage.removeItem('token')
+        window.location.href = formatRoute(constant.APP_ROUTES.LOGIN, {})
         break
       case 404:
         // Show 404 page

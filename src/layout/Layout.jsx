@@ -120,7 +120,6 @@ class Layout extends React.Component {
   };
 
   render() {
-    console.log("layout Render")
     const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
@@ -132,7 +131,7 @@ class Layout extends React.Component {
         <AppBar
           position="fixed"
           className={classes.appBar}
-          fooJon={classNames(classes.appBar, {
+          foojon={classNames(classes.appBar, {
             [classes.appBarShift]: this.state.open
           })}
         >

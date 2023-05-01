@@ -1,6 +1,7 @@
 import React from 'react'
 import dashboardImage from '../assets/images/Dashboard.png'
 
+
 export default function Dashboard() {
     const imagStyle = {
         "max-width": "100%",
@@ -8,9 +9,11 @@ export default function Dashboard() {
         "padding": 0,
         "margin": 0
     }
+    
     return (
         <div>
             <img alt='' style={imagStyle} src={dashboardImage} />
+            {/* <img src={process.env.PUBLIC_URL+"/images/logo.png"} /> */}
         </div>
     )
 }
