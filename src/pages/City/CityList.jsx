@@ -11,14 +11,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { DateConversion } from '../../utils/DateConversion';
 import Grid from '@mui/material/Grid';
+import { useSelector, useDispatch } from 'react-redux'
+import { increment, decrement } from '../../store/reducer/counterSlice';
 
 
 export default function CityList() {
+  const count = useSelector(state => state.counter.value)
+  const dispatch = useDispatch()
   const [rows, setRows] = useState([])
   const [vId, setVId] = useState(0);
   const [openBox, setOpenBox] = useState(false);
   const navigate = useNavigate();
-  
+
   const onDelete = (e) => {
     e.stopPropagation()
     // Call the api for deleting the Country record from the database
@@ -32,7 +36,7 @@ export default function CityList() {
     })
 
   };
-  
+
 
   const editPage = (countryId) => {
     navigate(formatRoute(constant.APP_ROUTES.CITY.EDIT_CITY, { id: countryId }));
@@ -109,7 +113,7 @@ export default function CityList() {
   return (
     <>
 
-     <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid container spacing={1}>
             <Grid item xs={8}>
@@ -133,8 +137,14 @@ export default function CityList() {
                   },
                 }}
               >
+                <button
+                  aria-label="Increment value"
+                  onClick={() => dispatch(increment())}
+                >
+                  Increment
+                </button>{count}
                 <DynamicTable
-                tableStyle={{"width":"500","height":500}}
+                  tableStyle={{ "width": "500", "height": 500 }}
                   checkboxSelection={false}
                   columns={columns}
                   rows={rows && rows.length > 0 ? rows : []}

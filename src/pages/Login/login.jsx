@@ -1,4 +1,4 @@
-import  React,{useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import * as apiService from '../../services/UserService'
+import constant from '../../utils/constant';
 
 function Copyright(props) {
   return (
@@ -31,8 +32,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const navigate = new useNavigate();
   const handleSubmit = (event) => {
@@ -42,11 +43,11 @@ export default function Login() {
       email: data.get('email'),
       password: data.get('password'),
     });
-   
-    const payload ={email,password}
-    apiService.loginUser(payload).then( (response) => {
-     
-     // const data = await response.data;
+
+    const payload = { email, password }
+    apiService.loginUser(payload).then((response) => {
+
+      // const data = await response.data;
       const token = response && response.data && response.data.data.token;
       if (!token) {
         alert('Unable to login. Please try after some time.');
@@ -126,7 +127,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href={constant.APP_ROUTES.USER.REGISTER} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
